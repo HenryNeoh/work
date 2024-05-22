@@ -1,26 +1,46 @@
-﻿body, html {
+﻿body,
+html,
+h1 {
     margin: 0;
     padding: 0;
-    height: 100%;
 }
 
-.container {
-    height: 3000px; /* Adjust as needed */
+h1 {
+    color: white;
+    font-size: 4rem;
+    text-align: center;
 }
 
-.image-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+section {
+    height: 100vh;
 }
 
-    .image-container img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* Ensures the image covers the entire container */
+.tag {
+}
+
+.tag {
+    opacity: 0;
+    transform: translate(0, 10vh);
+    transition: all 1s;
+}
+
+    .tag.visible {
         opacity: 1;
-        transition: opacity 0.5s ease-in-out;
+        transform: translate(0, 0);
     }
+
+.yellow {
+    background-color: lightyellow;
+}
+
+.red {
+    background-color: lightcoral;
+}
+
+.blue {
+    background-color: lightblue;
+}
+
+.green {
+    background-color: lightgreen;
+}

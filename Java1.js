@@ -1,17 +1,15 @@
-﻿window.addEventListener('scroll', function () {
-    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    var windowHeight = window.innerHeight;
-    var imageContainer = document.querySelector('.image-container');
-    var images = imageContainer.querySelectorAll('img');
+﻿$(document).on("scroll", function () {
+    var pageTop = $(document).scrollTop();
+    var pageBottom = pageTop + $(window).height();
+    var tags = $(".tag");
 
-    images.forEach(function (image, index) {
-        var imageOffset = image.offsetTop;
-        var imageHeight = image.offsetHeight;
-
-        if (scrollTop > imageOffset - windowHeight && scrollTop < imageOffset + imageHeight) {
-            image.style.opacity = 1;
+    for (var i = 0; i < tags.length; i++) {
+        var tag = tags[i];
+        if ($(tag).position().top < pageBottom) {
+            $(tag).addClass("visible");
         } else {
-            image.style.opacity = 0;
+            $(tag).removeClass("visible");
         }
-    });
+    }
 });
+
