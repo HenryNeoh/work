@@ -10,11 +10,10 @@
             text-align: center;
             background-image: url('baiii.jpg');
             background-size: cover;
-            overflow: hidden; /* Added overflow hidden to prevent scrollbars */
-            position: relative; /* Added to make position absolute elements work */
+            overflow: hidden;
+            position: relative;
         }
 
-        /* Added styles for the circle */
         .circle {
             position: absolute;
             width: 50px;
@@ -27,25 +26,214 @@
             transform: translate(-50%, -50%);
             transition: all 0.1s ease;
         }
+
+        h1 {
+            color: #FFD700;
+            font-weight: bold;
+            font-family: Tisa Sans Pro Black Italic;
+            font-size: 36px;
+            transition: color 0.3s;
+        }
+
+            h1:hover {
+                color: #7FFFD4;
+            }
+
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #FFFF00;
+            font-weight: bold;
+        }
+
+        .form-container {
+            display: none;
+            margin-top: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+            .form-container input {
+                padding: 8px;
+                margin: 5px;
+                width: calc(100% - 22px);
+                box-sizing: border-box;
+                border-style: outset;
+                border-radius: 100px;
+                color: #000000;
+                font-weight: bold;
+                background-color: #99FFCC;
+            }
+
+            .form-container button {
+                padding: 8px 16px;
+                background-color: #FFFF99;
+                color: #000000;
+                font-weight: bold;
+                border: solid;
+                cursor: pointer;
+                margin-right: 10px;
+                border-radius: 100px;
+            }
+
+            .form-container button:hover {
+                    background-color: #FFFF66;
+                }
+
+        .add-button {
+            background-color: #FFFF66; /* Change button color to green */
+            color: #000000;
+            font-weight: bold;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+
+            .add-button:hover {
+                background-color: #FFFF33;
+            }
+
+        .delete-button {
+            background-color: #F5F5F5;
+            color: #FF0000;
+            font-weight: bold;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+                background-color: #FF0000;
+                color: #F5F5F5;
+            }
     </style>
 </head>
 <body>
     <h1>Welcome to the Contact Page</h1>
-    <p>This is the contact page.</p>
+    <p style="color: #33FFFF; font-weight: bold; ">Add your contact here</p>
 
-    <!-- Added circle element -->
+    <!-- Circle element -->
     <div class="circle" id="circle"></div>
 
-    <script>
-        // Added JavaScript to make the circle follow the mouse cursor
-        document.addEventListener('DOMContentLoaded', function () {
-            const circle = document.getElementById('circle');
+    <!-- Table for storing client information -->
+    <table id="client-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JavaScript will populate this -->
+        </tbody>
+    </table>
 
-            document.addEventListener('mousemove', e => {
-                circle.style.left = e.pageX + 'px';
-                circle.style.top = e.pageY + 'px';
+    <!-- Button to reveal the form -->
+    <button class="add-button" onclick="toggleForm()">Add Client</button>
+
+    <!-- Form for adding new client information -->
+    <div class="form-container" id="client-form">
+        <input type="text" id="name" placeholder="Name">
+        <input type="text" id="email" placeholder="Email">
+        <input type="text" id="phone" placeholder="Phone">
+        <input type="text" id="address" placeholder="Address">
+        <button onclick="addClient()">Add</button>
+        <button onclick="cancelAdd()" style="background-color: #FF6666;">Cancel</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Retrieve client data from localStorage on page load
+            const savedClients = JSON.parse(localStorage.getItem('clients')) || [];
+            const table = document.getElementById('client-table').getElementsByTagName('tbody')[0];
+            savedClients.forEach(client => {
+                const row = table.insertRow();
+                row.insertCell().innerText = client.name;
+                row.insertCell().innerText = client.email;
+                row.insertCell().innerText = client.phone;
+                row.insertCell().innerText = client.address;
+                const deleteButton = document.createElement('button');
+                deleteButton.innerText = 'Delete';
+                deleteButton.onclick = function () {
+                    deleteClient(client);
+                    table.deleteRow(row.rowIndex);
+                };
+                deleteButton.classList.add('delete-button');
+                row.insertCell().appendChild(deleteButton);
             });
         });
+
+        function toggleForm() {
+            var form = document.getElementById("client-form");
+            form.style.display = (form.style.display === "block") ? "none" : "block";
+        }
+
+        function addClient() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var phone = document.getElementById("phone").value;
+            var address = document.getElementById("address").value;
+
+            var table = document.getElementById("client-table").getElementsByTagName('tbody')[0];
+            var row = table.insertRow();
+            row.insertCell().innerText = name;
+            row.insertCell().innerText = email;
+            row.insertCell().innerText = phone;
+            row.insertCell().innerText = address;
+
+            // Save the client data to localStorage
+            var clients = JSON.parse(localStorage.getItem('clients')) || [];
+            clients.push({ name, email, phone, address });
+            localStorage.setItem('clients', JSON.stringify(clients));
+
+            // Clear the form fields after adding the client
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("address").value = "";
+
+            // Hide the form after adding the client
+            toggleForm();
+        }
+
+        function cancelAdd() {
+            // Clear the form fields
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("address").value = "";
+
+            // Hide the form
+            toggleForm();
+        }
+
+        function deleteClient(client) {
+            var clients = JSON.parse(localStorage.getItem('clients')) || [];
+            var index = clients.findIndex(c => c.name === client.name && c.email === client.email && c.phone === client.phone && c.address === client.address);
+            if (index !== -1) {
+                clients.splice(index, 1);
+                localStorage.setItem('clients', JSON.stringify(clients));
+            }
+        }
+
+        const circle = document.getElementById('circle');
+        document.addEventListener('mousemove', e => {
+            circle.style.left = e.pageX + 'px';
+            circle.style.top = e.pageY + 'px';
+        });
     </script>
+    <p style="color: #FF0000; font-weight: bold; ">*You must reload the page after making any changes*</p>
 </body>
 </html>
