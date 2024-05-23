@@ -3,13 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Videos Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             background-image: url('b.jpg');
             background-size: cover;
+            overflow: hidden; /* Added overflow hidden to prevent scrollbars */
+            position: relative; /* Added to make position absolute elements work */
+        }
+
+        /* Added styles for the circle */
+        .circle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 255, 255, 0.5);
+            border-radius: 50%;
+            border: 1px solid #000000;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
         }
 
         video {
@@ -27,5 +43,19 @@
         Your browser does not support the video tag.
     </video>
 
+    <!-- Added circle element -->
+    <div class="circle" id="circle"></div>
+
+    <script>
+        // Added JavaScript to make the circle follow the mouse cursor
+        document.addEventListener('DOMContentLoaded', function () {
+            const circle = document.getElementById('circle');
+
+            document.addEventListener('mousemove', e => {
+                circle.style.left = e.pageX + 'px';
+                circle.style.top = e.pageY + 'px';
+            });
+        });
+    </script>
 </body>
 </html>

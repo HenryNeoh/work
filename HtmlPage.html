@@ -11,6 +11,8 @@
             background-color: #fcba03;
             background-image: url('baii.jpg');
             background-size: cover;
+            overflow: hidden; /* Added overflow hidden to prevent scrollbars */
+            position: relative; /* Added to make position absolute elements work */
         }
 
         .button {
@@ -51,26 +53,19 @@
                 background-color: #FFFF00;
             }
 
-        .container {
-            margin-top: 100px;
+        /* Added styles for the circle */
+        .circle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 255, 255, 0.5);
+            border-radius: 50%;
+            border: 1px solid #000000;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
         }
-
-            .container h1 {
-                color: #333;
-            }
-
-            .container p {
-                color: #555;
-            }
-
-            .container a {
-                color: #007bff;
-                text-decoration: none;
-            }
-
-                .container a:hover {
-                    text-decoration: underline;
-                }
     </style>
 </head>
 <body>
@@ -90,6 +85,9 @@
     <div id="quote"></div>
     <button id="generate" onclick="generateQuote()">Generate Quote</button>
 
+    <!-- Added circle element -->
+    <div class="circle" id="circle"></div>
+
     <script>
         var quotes = [
             "The only way to do great work is to love what you do. - Steve Jobs",
@@ -104,6 +102,16 @@
             var randomNumber = Math.floor(Math.random() * quotes.length);
             document.getElementById("quote").innerHTML = quotes[randomNumber];
         }
+
+        // Added JavaScript to make the circle follow the mouse cursor
+        document.addEventListener('DOMContentLoaded', function () {
+            const circle = document.getElementById('circle');
+
+            document.addEventListener('mousemove', e => {
+                circle.style.left = e.pageX + 'px';
+                circle.style.top = e.pageY + 'px';
+            });
+        });
     </script>
 </body>
 </html>
