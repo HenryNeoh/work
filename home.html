@@ -27,11 +27,44 @@
             transform: translate(-50%, -50%);
             transition: all 0.1s ease;
         }
+
+        h1 {
+            color: #FFEFD5;
+            font-weight: bold;
+            font-family: Tisa Sans Pro Black Italic;
+            font-size: 36px;
+            transition: color 0.3s; /* Smooth transition for color change */
+        }
+
+            /* Change font color on hover */
+            h1:hover {
+                color: #7FFFD4; /* Change the color to red on hover */
+            }
+
+            /* Added style for link */
+            a {
+                color: #00FFFF; /* Change link color to cyan */
+                text-decoration: underline; /* Remove underline */
+                display: block;
+                margin-bottom: 20px;
+                font-weight: bold;
+            }
+
+            /* Change link color on hover */
+            a:hover {
+                color: #0000FF; /* Change link color to red on hover */
+            }           
     </style>
 </head>
 <body>
     <h1>Welcome to the Home Page</h1>
     <p>This is the home page.</p>
+
+    <!-- Added YouTube link -->
+    <a href="https://www.youtube.com/">Watch Video</a>
+
+    <!-- Added image link -->
+    <a href="https://www.travelandleisure.com/thmb/V8R57MZSpI3zCp_0E5NWTeU04PI=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/kitten-litter-cat-names-CATNAMES0521-338c6363384c46af850c71f57c66559d.jpg">Watch Image</a>   
 
     <!-- Added circle element -->
     <div class="circle" id="circle"></div>
